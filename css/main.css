@@ -1,6 +1,6 @@
 .upperFrame {
-    width: 500px;
-    height: 100px;
+    width: 800px;
+    height: 150px;
     position: absolute;
     background-color: grey;
     border-style: outset;
@@ -55,4 +55,47 @@ table {
     font-size: 1.5em;
     text-align: center;
     border: 1px solid black;
+}
+
+.custDifModal {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.custDifModal input {
+    padding: 5px;
+    margin: 5px;
+    width: 90px;
+}
+
+body {
+    background-color: white;
+    color: black;
+    transition: background 0.5s, color 0.3s;
+}
+
+.dark-mode {
+    background-color: black;
+    color: black;
+}
+
+#toggleTheme {
+    position: absolute;
+    top: 33px;
+    left: 350px;
+    z-index: 1000;
+}
+
+.dark-mode h1 {
+    color: white;
+}
+
+footer {
+    text-align: center;
+    padding: 5px;
+    background-color: grey;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

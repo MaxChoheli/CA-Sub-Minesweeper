@@ -26,7 +26,6 @@ function restartGame() {
 }
 
 function renderCell(location, value) {
-    // Select the elCell and set the value
     const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
     elCell.innerHTML = value
 }
@@ -34,3 +33,9 @@ function renderCell(location, value) {
 function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
+// figure out dark mode (and never stop using it)
+const toggleButton = document.getElementById("toggleTheme")
+const body = document.body
+toggleButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode")
+})

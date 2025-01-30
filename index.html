@@ -6,28 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MineSweeper</title>
 </head>
-<h1>MineSweeper-Early</h1>
+<h1>MineSweeper-halfway</h1>
 <link rel="stylesheet" href="css/main.css">
 
 <body>
+    <button id="toggleTheme">Toggle Theme</button>
     <div class="upperFrame">
         <div class="timer" id="timer">0.00 seconds</div>
-        <button id="restartButton" onclick="restartGame()">Restart</button>
+        <div class="lives" id="liveCount">Lives left: 3</div>
+        <button id="restartButton" onclick="restartGame()">🙂</button>
         <div class="difButtons easyDif" onclick="InitEasyDif()">Easy</div>
         <div class="difButtons medDif" onclick="InitMedDif()">Medium</div>
         <div class="difButtons hardDif" onclick="InitHardDif()">Hard</div>
-        <div class="difButtons extremeDif" onclick="InitCustomDif()">Custom</div>
-    </div>
-    <div class="frame">
-        <div class="grids easyGrid"></div>
-        <div class="grids medGrid"></div>
-        <div class="grids hardGrid"></div>
-        <div class="grids customGrid"></div>
-    </div>
+        <div class="difButtons customDif" onclick="InitCustomDif()">Custom</div>
+        <div class="custDifModal">
+            <input type="number" id="custSize" placeholder="Grid Size" min="2">
+            <input type="number" id="custMines" placeholder="Mine Count" min="1">
+            <div class="remainingMines">
+                Remaining Mines: <span id="remainingMines">0</span>
+            </div>
+        </div>
 
+
+        <div class="frame">
+            <div class="grids easyGrid"></div>
+            <div class="grids medGrid"></div>
+            <div class="grids hardGrid"></div>
+            <div class="grids customGrid"></div>
+        </div>
+
+    </div>
 
     <script src="js/game.js"></script>
     <script src="js/utils.js"></script>
+    <footer>
+        <p>made by Max Choheli</p>
+    </footer>
 </body>
 
 </html>
