@@ -1,21 +1,85 @@
+html,
+body {
+    overflow: visible;
+}
+
 .upperFrame {
     width: 800px;
     height: 150px;
     position: absolute;
-    background-color: grey;
+    background-color: rgb(66, 50, 50);
     border-style: outset;
-    border-color: darkslategray;
+    border-color: goldenrod;
     border-radius: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
+    overflow: visible;
+    z-index: 0;
 }
 
 .difButtons {
+    position: relative;
     cursor: pointer;
     padding: 10px 15px;
     background-color: lightgrey;
+    border-radius: 12px;
+    overflow: visible;
+    z-index: 0;
+    border: none;
+    outline: none;
+}
+
+.difButtons::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: darkslategrey;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+
+}
+
+.difButtons::before {
+    content: "";
+    background: linear-gradient(45deg,
+            red, orange, greenYellow, greenYellow,
+            cyan, blue, deeppink, red);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 600%;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(8px);
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.difButtons:hover::before {
+    opacity: 1;
+}
+
+.difButtons:hover::after {
+    background: transparent;
+}
+
+
+#restartButton {
+    cursor: pointer;
+    border: none;
+    transform: scale(1.5);
+    background-color: rgb(66, 50, 50);
+    border-radius: 50%;
+    outline: none;
+
 }
 
 .cell {
@@ -38,14 +102,45 @@
     margin-top: 20px;
 }
 
+.frame::before {
+    content: "";
+    background: linear-gradient(45deg,
+            red, orange, greenYellow, greenYellow,
+            cyan, blue, deeppink, red);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 600%;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(25px);
+    animation: glowing 20s linear infinite;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.frame ::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: darkslategrey;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
 table {
+    border-color: goldenrod;
     border-style: outset;
     border-radius: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
-
 }
 
 .CCELL {
@@ -81,10 +176,16 @@ body {
 }
 
 #toggleTheme {
-    position: absolute;
-    top: 33px;
-    left: 350px;
-    z-index: 1000;
+    padding: 15px 40px;
+    position: relative;
+    top: -50px;
+    left: 325px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: black;
+    background-color: grey;
+    border-radius: 12px;
 }
 
 .dark-mode h1 {
@@ -98,4 +199,19 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-weight: bold;
+}
+
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }

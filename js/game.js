@@ -2,10 +2,8 @@
 
 const CELL = ' '
 const MINE = '💣'
-var curMineCount = 0
 var gFirstClick = true
 var gLives = 3
-//WIP dont forget to use these 3 counters once you finish setting everything up
 
 const gGame = {
     isOn: false,
@@ -229,14 +227,30 @@ function cellClicked(i, j) {
     if (elCell.classList.contains('UCELL')) {
         return
     }
+    if (elCell.classList.contains("flagged") && gBoard[i][j] !== MINE) {
+        elCell.classList.remove("flagged")
+        gGame.markedCount--
+        MCUpdate()
+    }
     if (cell === MINE) {
         if (gLives > 0) {
             gLives--
             updateLives()
 
-            elCell.classList.add("flagged")
-            elCell.innerHTML = "🚩"
-            alert("MINE CLICKED!")
+            if (elCell.classList.contains("flagged") && gBoard[i][j] == MINE) {
+                alert("MINE CLICKED!")
+                MCUpdate()
+                checkWin()
+            }
+            else {
+                elCell.classList.add("flagged")
+                elCell.innerHTML = "🚩"
+                gGame.markedCount++
+                MCUpdate()
+                alert("MINE CLICKED!")
+                checkWin()
+            }
+
             if (gLives === 0) {
                 gameOver(false)
             }
@@ -257,8 +271,24 @@ function cellClicked(i, j) {
         else {
             elCell.innerHTML = ''
             uncoverAdjCells(i, j)
+            checkWin()
         }
     }
+    checkWin()
+}
+
+function MCUpdate() {
+    var minesCount = 0;
+    if (gBoard.length === gEasyLevel.SIZE) {
+        minesCount = gEasyLevel.MINES
+    } else if (gBoard.length === gMedLevel.SIZE) {
+        minesCount = gMedLevel.MINES
+    } else if (gBoard.length === gHardLevel.SIZE) {
+        minesCount = gHardLevel.MINES
+    } else if (gBoard.length === gCustLevel.SIZE) {
+        minesCount = gCustLevel.MINES
+    }
+    updateRemainingMines(minesCount)
 }
 
 //make the right click place flags on covered cells
@@ -295,6 +325,7 @@ function placeFlag(elCell) {
         }
     }
     updateRemainingMines(minesCount)
+    checkWin()
 }
 
 
@@ -304,15 +335,20 @@ function updateRemainingMines(minesCount) {
 }
 
 
-//WIP,DONT FORGET TO CHANGE THIS LATER!!! make a simple game-over for now and change this to properly show up later
-
+//make a game over function that changes the icon based on the state of the game
 function gameOver(Win) {
+    const audio = document.getElementById("Caramella")
+    audio.volume = 0.1
+    if (!gGame.isOn) return
+
     clearInterval(gGame.timerInterval)
     gGame.timerInterval = null
+    gGame.isOn = false
 
     if (Win) {
-        console.log('you won')
+        alert('you won')
         document.getElementById("restartButton").textContent = "😎"
+        audio.play()
     }
     else {
         console.log('whoops')
@@ -323,8 +359,8 @@ function gameOver(Win) {
 }
 
 function revealGrid() {
-    for (let i = 0; i < gBoard.length; i++) {
-        for (let j = 0; j < gBoard[i].length; j++) {
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
             const elCell = document.querySelector(`.cell-${i}-${j}`)
 
             elCell.classList.remove('CCELL')
@@ -343,6 +379,30 @@ function revealGrid() {
         }
     }
 }
+
+function checkWin() {
+    var uncovCells = 0
+    var totNonMineCells = 0
+
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
+            const cell = gBoard[i][j]
+            const elCell = document.querySelector(`.cell-${i}-${j}`)
+
+            if (cell !== MINE) {
+                totNonMineCells++
+                if (elCell.classList.contains('UCELL')) {
+                    uncovCells++
+                }
+            }
+        }
+    }
+
+    if (uncovCells === totNonMineCells) {
+        gameOver(true)
+    }
+}
+
 
 //find a way to count the mines around each cell and display it 
 
@@ -406,11 +466,4 @@ function timerStart() {
 //update the lives on display
 function updateLives() {
     document.getElementById("liveCount").textContent = ` Lives left: ${gLives}`
-}
-
-function getRandomInt(min, max) {
-    return (Math.floor(Math.random() * (max - min)) + min)
-}
-function getRandomIntInclusive(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
 }
