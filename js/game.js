@@ -4,6 +4,7 @@ const CELL = ' '
 const MINE = '💣'
 var gFirstClick = true
 var gLives = 3
+const gAudio = document.getElementById("Caramella")
 
 const gGame = {
     isOn: false,
@@ -35,6 +36,8 @@ var gBoard
 
 function InitEasyDif() {
     document.getElementById("restartButton").textContent = "🙂"
+    gAudio.pause()
+    gAudio.currentTime = 0
     gLives = 3
     gFirstClick = true
     gGame.secsPassed = 0
@@ -50,6 +53,8 @@ function InitEasyDif() {
 
 function InitMedDif() {
     document.getElementById("restartButton").textContent = "🙂"
+    gAudio.pause()
+    gAudio.currentTime = 0
     gLives = 3
     gFirstClick = true
     gGame.secsPassed = 0
@@ -64,6 +69,8 @@ function InitMedDif() {
 
 function InitHardDif() {
     document.getElementById("restartButton").textContent = "🙂"
+    gAudio.pause()
+    gAudio.currentTime = 0
     gLives = 3
     gFirstClick = true
     gGame.secsPassed = 0
@@ -132,6 +139,8 @@ function hardDif() {
 
 function InitCustomDif() {
     document.getElementById("restartButton").textContent = "🙂"
+    gAudio.pause()
+    gAudio.currentTime = 0
     gLives = 3
     gFirstClick = true
     gGame.secsPassed = 0
@@ -337,8 +346,7 @@ function updateRemainingMines(minesCount) {
 
 //make a game over function that changes the icon based on the state of the game
 function gameOver(Win) {
-    const audio = document.getElementById("Caramella")
-    audio.volume = 0.1
+    gAudio.volume = 0.1
     if (!gGame.isOn) return
 
     clearInterval(gGame.timerInterval)
@@ -348,7 +356,8 @@ function gameOver(Win) {
     if (Win) {
         alert('you won')
         document.getElementById("restartButton").textContent = "😎"
-        audio.play()
+        gAudio.play()
+        gAudio
     }
     else {
         console.log('whoops')
